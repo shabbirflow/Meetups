@@ -6,6 +6,26 @@ import Head from "next/head";
 
 const detail = (props) => {
   const meetup = props.meetup;
+  const router = useRouter();
+  const object = {id: router.query.meetupid}
+  console.log("ID", router.query.meetupid, JSON.stringify(object))
+
+  async function deleteHandler(e) {
+    e.preventDefault();
+
+    const res = await fetch('api/delete', {
+      body: JSON.stringify(object),
+      method: "POST", 
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await res.json();
+    console.log("DELETE DATA", data);
+    router.push('/');
+  }
+
 
   return (
     <>
@@ -19,6 +39,7 @@ const detail = (props) => {
           title={meetup.title}
           address={meetup.location}
           description={meetup.description}
+          deleteHandler = {deleteHandler}
         />
       )}
     </>
@@ -37,7 +58,7 @@ export async function getStaticPaths() {
     .find({}, { projection: { _id: 1 } })
     .toArray();
   //only returns _id and not other values
-  console.log("meetupsIDS", meetupsIDS);
+  // console.log("meetupsIDS", meetupsIDS);
   const paths = meetupsIDS.map(x => {
     const id = x._id.toString();
     return {params: {meetupid: id}}
@@ -52,7 +73,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  console.log(context.params, context.params.meetupid);
+  // console.log(context.params, context.params.meetupid);
 
   const client = await MongoClient.connect(
     "mongodb+srv://kaderishabbir:shabbir123@meetups.z11w7dw.mongodb.net/?retryWrites=true&w=majority"
@@ -64,7 +85,7 @@ export async function getStaticProps(context) {
   const meetup = await meetupsCollection.findOne({
     _id: new ObjectId(meetupid),
   });
-  console.log("FOUND MEETUP", meetup);
+  // console.log("FOUND MEETUP", meetup);
   const { title, location, description, image } = meetup;
   client.close();
 

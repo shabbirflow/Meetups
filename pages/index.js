@@ -2,8 +2,12 @@ import MeetupList from "@/components/meetups/MeetupList";
 import React, { useEffect, useState } from "react";
 import { DUMMY_MEETUPS } from "@/components/dummydata";
 import Head from "next/head";
+import { MongoClient } from "mongodb";
 
 const index = (props) => {
+
+  // console.log(props.meetups);
+
   return (
     <>
     <Head>
@@ -18,36 +22,29 @@ const index = (props) => {
 
 export async function getStaticProps() {
 
-  const res = await fetch('http://localhost:3000/api/meetups', {
-    method: "GET", 
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  const client = await MongoClient.connect(
+    "mongodb+srv://kaderishabbir:shabbir123@meetups.z11w7dw.mongodb.net/?retryWrites=true&w=majority"
+  );
 
-  const data = await res.json();
-  // console.log("FRONT DATA", data);
+  const db = client.db();
+  const meetupsCollection = db.collection("meetups");
+  
+  const meetups = await meetupsCollection.find().toArray();
 
-  //get data from an API
+  client.close();
+
   return {
     props: {
-      meetups: data,
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        location: meetup.location,
+        image: meetup.image,
+        id: meetup._id.toString(),
+      })),
     },
-    revalidate: 10, 
-//this page will be re-generated at least once every 10 seconds if there are requests coming to this page
+    revalidate: 10,
   };
 }
 
-
-// export async function getServerSideProps(context) {
-//   const req = context.req; 
-//   const res = context.res; //request and response objects
-
-//   return { 
-//     props: {
-//       meetups: DUMMY_MEETUPS,
-//     }
-//   }
-// }
 
 export default index;

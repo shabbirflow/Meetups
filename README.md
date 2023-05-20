@@ -1,10 +1,9 @@
 
 A FullStack app made with NextJS and MongoDB with CRUD functionality. It has all the important NextJS features with server side rendering and improved search engine optimization. Stores data to a database with MongoDB Atlas.
 
+Live SITE : https://meetups-git-master-shabbirflow.vercel.app/
 
-![Screenshot (298)](https://github.com/shabbirflow/Meetups/assets/115451412/64b4ec85-87fc-4944-b317-68e0505f47b5)
-![Screenshot (297)](https://github.com/shabbirflow/Meetups/assets/115451412/fa362879-f0b8-4023-8529-7574935947e7)
-![Screenshot (299)](https://github.com/shabbirflow/Meetups/assets/115451412/1b4e1336-e8ca-46e5-a1c4-1e279c8f072a)
+<img src="https://github.com/shabbirflow/Meetups/assets/115451412/64b4ec85-87fc-4944-b317-68e0505f47b5" width="45%"></img> <img src="https://github.com/shabbirflow/Meetups/assets/115451412/fa362879-f0b8-4023-8529-7574935947e7" width="45%"></img> <img src="https://github.com/shabbirflow/Meetups/assets/115451412/1b4e1336-e8ca-46e5-a1c4-1e279c8f072a" width="45%"></img> 
 
 
 
